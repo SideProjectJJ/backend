@@ -2,6 +2,7 @@ package gnu.project.pbl.auth.entity;
 
 import gnu.project.pbl.auth.enumerated.SocialProvider;
 import gnu.project.pbl.common.enumerated.UserRole;
+import java.util.UUID;
 
 public interface OauthUser {
 
@@ -19,7 +20,7 @@ public interface OauthUser {
         return getOauthInfo().getName();
     }
 
-    default String getUuid() {
+    default UUID getUuid() {
         return getOauthInfo().getUuid();
     }
 

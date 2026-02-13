@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OauthUserFactory {
 
-    private final OwnerRepository ownerRepository;
     private final CustomerRepository customerRepository;
 
     public OauthUser findOrCreateUser(OauthUserInfo userInfo, SocialProvider provider,

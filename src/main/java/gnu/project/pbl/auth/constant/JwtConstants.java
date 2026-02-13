@@ -8,7 +8,7 @@ public class JwtConstants {
     // ClaimNames
     public static final String TOKEN_TYPE = "token_type";
     public static final String USER_ROLE = "user_role";
-    public static final String USER_ID = "user_id";
+    public static final String UUID = "uuid";
 
     // JwtInterceptor
     public static final String AUTHORIZATION_HEADER = "Authorization";

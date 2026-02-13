@@ -26,7 +26,7 @@ public class OauthService {
     private final OwnerRepository ownerRepository;
     private final OauthUserFactory oauthUserFactory;
     private final JwtProvider jwtProvider;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     public AuthTokenDto login(final OauthLoginRequest request) {
         final OauthProvider provider = oauthProviders.getProvider(request.socialProvider());
@@ -38,7 +38,7 @@ public class OauthService {
             request.userRole()
         );
         return AuthTokenDto.of(
-            jwtProvider.createAccessToken(user.getId(), user.getUuid(), user.getUserRole())
+            jwtProvider.createAccessToken(user.getUuid(), user.getUserRole())
         );
     }
 

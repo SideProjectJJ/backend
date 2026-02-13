@@ -1,11 +1,11 @@
 package gnu.project.pbl.common.error;
 
-import static gnu.project.backend.common.error.ErrorCode.INVALID_ENUM_FORMAT;
-import static gnu.project.backend.common.error.ErrorCode.MESSAGE_BODY_UNREADABLE;
+import static gnu.project.pbl.common.error.ErrorCode.INVALID_ENUM_FORMAT;
+import static gnu.project.pbl.common.error.ErrorCode.MESSAGE_BODY_UNREADABLE;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import gnu.project.backend.common.exception.AuthException;
-import gnu.project.backend.common.exception.BusinessException;
+import gnu.project.pbl.common.exception.AuthException;
+import gnu.project.pbl.common.exception.BusinessException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

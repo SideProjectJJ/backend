@@ -1,6 +1,7 @@
 package gnu.project.pbl.auth.entity;
 
 import gnu.project.pbl.common.enumerated.UserRole;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +10,11 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Accessor {
 
-    private final String socialId;
-    private final Long userId;
+    private final UUID uuid;
     private final UserRole userRole;
 
-    public static Accessor user(String socialId, Long userId, UserRole userROle) {
-        return new Accessor(socialId, userId, userROle);
+    public static Accessor user(UUID uuid, UserRole userROle) {
+        return new Accessor(uuid, userROle);
     }
 
     public boolean isUser() {
