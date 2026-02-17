@@ -60,28 +60,6 @@ public class KakaoProvider implements OauthProvider {
     }
 
     @Override
-    public String getAccessToken(String code) {
-        final MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
-        data.add(GRANT_TYPE_KEY, GRANT_TYPE);
-        data.add(CLIENT_ID_KEY, clientId);
-        data.add(REDIRECT_URI_KEY, redirectUri);
-        data.add(CLIENT_SECRET_KEY, clientSecret);
-        data.add(CODE_KEY, code);
-        return webClient.post()
-            .uri(tokenUri)
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .body(BodyInserters.fromFormData(data))
-            .retrieve()
-            .onStatus(
-                HttpStatusCode::isError,
-                this::handleOauthError
-            )
-            .bodyToMono(KakaoAccessTokenResponse.class)
-            .map(KakaoAccessTokenResponse::accessToken)
-            .block();
-    }
-
-    @Override
     public OauthUserInfo getUserInfo(String accessToken) {
         return new KakaoUserInfo(fetchUserInfo(accessToken));
     }

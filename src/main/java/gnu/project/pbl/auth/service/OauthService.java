@@ -33,8 +33,7 @@ public class OauthService {
 
     public AuthTokenDto login(final OauthLoginRequest request) {
         final OauthProvider provider = oauthProviders.getProvider(request.socialProvider());
-        final String accessToken = provider.getAccessToken(request.code());
-        final OauthUserInfo userInfo = provider.getUserInfo(accessToken);
+        final OauthUserInfo userInfo = provider.getUserInfo(request.accessToken());
         final OauthUser user = oauthUserFactory.findOrCreateUser(
             userInfo,
             provider.getProvider(),
