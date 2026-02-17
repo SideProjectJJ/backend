@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByOauthInfo_Uuid(final UUID uuid);
+    Optional<User> findByUuid(final UUID uuid);
 
-    boolean existsByOauthInfo_Uuid(final UUID uuid);
+    boolean existsByUuid(final UUID uuid);
+
+    Optional<User> findByOauthInfo_SocialId(String socialId);
 }
+

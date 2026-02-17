@@ -2,9 +2,8 @@ package gnu.project.pbl.auth.jwt;
 
 import static gnu.project.pbl.auth.constant.JwtConstants.AUTHORIZATION_HEADER;
 import static gnu.project.pbl.auth.constant.JwtConstants.BEARER_PREFIX_LENGTH;
-import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_SOCIAL_ID;
-import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_USER_ID;
 import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_USER_ROLE;
+import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_UUID;
 import static gnu.project.pbl.auth.constant.NaverOauthConstants.BEARER_PREFIX;
 import static gnu.project.pbl.common.error.ErrorCode.AUTH_TOKEN_INVALID;
 
@@ -56,10 +55,8 @@ public class JwtInterceptor implements HandlerInterceptor {
     private void setUserAttributes(HttpServletRequest request, String token) {
         String socialId = jwtResolver.extractSocialId(token);
         UserRole userRole = jwtResolver.extractUserRole(token);
-        Long userId = jwtResolver.extractUserId(token);
 
-        request.setAttribute(REQUEST_ATTR_SOCIAL_ID, socialId);
-        request.setAttribute(REQUEST_ATTR_USER_ID, userId);
+        request.setAttribute(REQUEST_ATTR_UUID, socialId);
         request.setAttribute(REQUEST_ATTR_USER_ROLE, userRole);
     }
 

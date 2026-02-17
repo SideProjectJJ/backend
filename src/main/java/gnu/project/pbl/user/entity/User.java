@@ -16,6 +16,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,14 +29,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Users")
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity implements OauthUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(columnDefinition = "BINARY(16)", unique = true, nullable = false, updatable = false)
     private UUID uuid;
@@ -49,9 +49,6 @@ public class User extends BaseEntity implements OauthUser {
 
     @Column(name = "weight")
     private Short weight;
-
-    @Column(name = "email")
-    private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -70,13 +67,12 @@ public class User extends BaseEntity implements OauthUser {
     public static User createFromOAuth(
         final String email,
         final String name,
-        final UUID uuid,
+        final String socialId,
         final SocialProvider provider
     ) {
-        final OauthInfo oauthInfo = OauthInfo.of(email, name, uuid, provider);
+        final OauthInfo oauthInfo = OauthInfo.of(email, name, socialId, provider);
 
         return new User(
-            null,
             null,
             null,
             null,
@@ -87,6 +83,12 @@ public class User extends BaseEntity implements OauthUser {
             UserRole.USER,
             oauthInfo
         );
+    }
+    @PrePersist
+    public void prePersist() {
+        if (this.uuid == null) {
+            this.uuid = UUID.randomUUID();
+        }
     }
     public void signUp(UserRequest request){
         this.phoneNumber = request.phoneNumber();

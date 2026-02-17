@@ -2,6 +2,7 @@ package gnu.project.pbl.auth.userinfo;
 
 
 import gnu.project.pbl.auth.dto.response.KakaoUserInfoResponse;
+import java.util.UUID;
 
 public class KakaoUserInfo implements OauthUserInfo {
 
@@ -14,6 +15,7 @@ public class KakaoUserInfo implements OauthUserInfo {
         this.email = response.kakaoAccount().email();
         this.name = response.kakaoAccount().profile().nickname();
     }
+
 
     @Override
     public String getSocialId() {

@@ -56,7 +56,7 @@ public class JwtProvider {
         final Date expiredDate = new Date(now.getTime() + expirationMillis);
 
         return Jwts.builder()
-            .claim(UUID, uuid)
+            .setSubject(String.valueOf(uuid))
             .claim(USER_ROLE, userRole)
             .setIssuedAt(now)
             .setExpiration(expiredDate)

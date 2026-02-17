@@ -52,7 +52,7 @@ public class UserService {
     }
 
     private User findCustomerByUuid(Accessor accessor) {
-        return userRepository.findByOauthInfo_Uuid(accessor.getUuid())
+        return userRepository.findByUuid(accessor.getUuid())
             .orElseThrow(() -> new BusinessException(CUSTOMER_NOT_FOUND_EXCEPTION));
     }
 

@@ -16,8 +16,7 @@ public class JwtConstants {
     public static final int BEARER_PREFIX_LENGTH = BEARER_PREFIX.length();
 
     // Request Attribute
-    public static final String REQUEST_ATTR_SOCIAL_ID = "socialId";
+    public static final String REQUEST_ATTR_UUID = "uuid";
     public static final String REQUEST_ATTR_USER_ROLE = "userRole";
-    public static final String REQUEST_ATTR_USER_ID = "userId";
 
 }

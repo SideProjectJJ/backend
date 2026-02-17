@@ -5,7 +5,7 @@ import gnu.project.pbl.common.enumerated.UserRole;
 import java.util.UUID;
 
 public interface OauthUser {
-
+    UUID getUuid();
     Long getId();
 
     OauthInfo getOauthInfo();
@@ -20,8 +20,8 @@ public interface OauthUser {
         return getOauthInfo().getName();
     }
 
-    default UUID getUuid() {
-        return getOauthInfo().getUuid();
+    default String getSocialId() {
+        return getOauthInfo().getSocialId();
     }
 
     default SocialProvider getSocialProvider() {

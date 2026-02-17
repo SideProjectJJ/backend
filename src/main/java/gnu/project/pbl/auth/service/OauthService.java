@@ -6,6 +6,7 @@ import gnu.project.pbl.auth.dto.request.OauthLoginRequest;
 import gnu.project.pbl.auth.dto.response.AuthTokenDto;
 import gnu.project.pbl.auth.entity.Accessor;
 import gnu.project.pbl.auth.entity.OauthUser;
+import gnu.project.pbl.auth.enumerated.SocialProvider;
 import gnu.project.pbl.auth.factory.OauthUserFactory;
 import gnu.project.pbl.auth.jwt.JwtProvider;
 import gnu.project.pbl.auth.provider.OauthProvider;
@@ -13,6 +14,9 @@ import gnu.project.pbl.auth.provider.OauthProviders;
 import gnu.project.pbl.auth.userinfo.OauthUserInfo;
 import gnu.project.pbl.common.enumerated.UserRole;
 import gnu.project.pbl.common.exception.AuthException;
+import gnu.project.pbl.user.entity.User;
+import gnu.project.pbl.user.repository.UserRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +27,6 @@ import org.springframework.stereotype.Service;
 public class OauthService {
 
     private final OauthProviders oauthProviders;
-    private final OwnerRepository ownerRepository;
     private final OauthUserFactory oauthUserFactory;
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
@@ -38,26 +41,26 @@ public class OauthService {
             request.userRole()
         );
         return AuthTokenDto.of(
-            jwtProvider.createAccessToken(user.getUuid(), user.getUserRole())
+            jwtProvider.createAccessToken(
+                user.getUuid(),
+                user.getUserRole()
+            )
         );
     }
 
-    public Accessor getCurrentAccessor(final String socialId, final Long userId,
-        final UserRole userRole) {
-        log.debug("Getting accessor for socialId: {}, userRole: {}", socialId, userRole);
 
-        if (!isUserExists(socialId, userRole)) {
-            log.warn("User not found for socialId: {}, userRole: {}", socialId, userRole);
+    public Accessor getCurrentAccessor(final UUID uuid, final UserRole userRole) {
+
+        if (!isUserExists(uuid, userRole)) {
             throw new AuthException(AUTH_USER_NOT_FOUND);
         }
 
-        return Accessor.user(socialId, userId, userRole);
+        return Accessor.user(uuid, userRole);
     }
 
-    private boolean isUserExists(String socialId, UserRole userRole) {
+    private boolean isUserExists(UUID uuid, UserRole userRole) {
         return switch (userRole) {
-            case ADMIN -> ownerRepository.existsByOauthInfo_SocialId(socialId);
-            case USER -> customerRepository.existsByOauthInfo_SocialId(socialId);
+            case USER -> userRepository.existsByUuid(uuid);
             default -> false;
         };
     }

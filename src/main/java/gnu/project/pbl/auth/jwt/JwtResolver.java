@@ -1,7 +1,6 @@
 package gnu.project.pbl.auth.jwt;
 
 import static gnu.project.pbl.auth.constant.JwtConstants.TOKEN_TYPE;
-import static gnu.project.pbl.auth.constant.JwtConstants.USER_ID;
 import static gnu.project.pbl.auth.constant.JwtConstants.USER_ROLE;
 import static gnu.project.pbl.common.error.ErrorCode.AUTH_TOKEN_EXPIRED;
 import static gnu.project.pbl.common.error.ErrorCode.AUTH_TOKEN_INVALID;
@@ -42,9 +41,6 @@ public class JwtResolver {
         return UserRole.valueOf(value);
     }
 
-    public Long extractUserId(String token) {
-        return parseClaims(token).get(USER_ID, Long.class);
-    }
 
     // TODO : 추후 사용
     public TokenType extractTokenType(String token) {

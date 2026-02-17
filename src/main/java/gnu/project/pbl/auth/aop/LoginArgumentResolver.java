@@ -1,14 +1,14 @@
 package gnu.project.pbl.auth.aop;
 
-import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_SOCIAL_ID;
-import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_USER_ID;
 import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_USER_ROLE;
+import static gnu.project.pbl.auth.constant.JwtConstants.REQUEST_ATTR_UUID;
 import static gnu.project.pbl.common.error.ErrorCode.AUTH_USER_NOT_FOUND;
 
 import gnu.project.pbl.auth.service.OauthService;
 import gnu.project.pbl.common.enumerated.UserRole;
 import gnu.project.pbl.common.exception.AuthException;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.data.projection.Accessor;
@@ -38,13 +38,12 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         WebDataBinderFactory binderFactory
     ) {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        final String socialId = (String) request.getAttribute(REQUEST_ATTR_SOCIAL_ID);
-        final Long userId = (Long) request.getAttribute(REQUEST_ATTR_USER_ID);
+        final UUID uuid = (UUID) request.getAttribute(REQUEST_ATTR_UUID);
         final UserRole userRole = (UserRole) request.getAttribute(REQUEST_ATTR_USER_ROLE);
 
-        if (socialId == null || userRole == null) {
+        if (uuid == null || userRole == null) {
             throw new AuthException(AUTH_USER_NOT_FOUND);
         }
-        return oauthService.getCurrentAccessor(socialId, userId, userRole);
+        return oauthService.getCurrentAccessor(uuid, userRole);
     }
 }

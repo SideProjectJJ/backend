@@ -16,21 +16,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OauthInfo {
 
+    private String socialId;
+
     private String email;
 
     private String name;
-
-    private UUID uuid;
 
     @Enumerated(EnumType.STRING)
     private SocialProvider socialProvider;
 
     public static OauthInfo of(
+        final String socialId,
         final String email,
         final String name,
-        final UUID uuid,
         final SocialProvider provider
     ) {
-        return new OauthInfo(email, name, uuid, provider);
+        return new OauthInfo(socialId,email, name, provider);
     }
 }
