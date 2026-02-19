@@ -70,7 +70,7 @@ public class User extends BaseEntity implements OauthUser {
         final String socialId,
         final SocialProvider provider
     ) {
-        final OauthInfo oauthInfo = OauthInfo.of(email, name, socialId, provider);
+        final OauthInfo oauthInfo = OauthInfo.of(socialId, email,name , provider);
 
         return new User(
             null,
